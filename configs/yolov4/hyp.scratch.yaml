@@ -1,5 +1,4 @@
 ms_loss_scaler_value: 1.0
-ms_grad_sens: 1.0
 ema: False
 ms_amp_level: O2
 

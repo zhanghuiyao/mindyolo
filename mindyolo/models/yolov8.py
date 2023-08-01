@@ -3,7 +3,7 @@ import numpy as np
 import mindspore as ms
 from mindspore import Tensor, nn
 
-from .heads.yolov8_head import YOLOv8Head
+from .heads.yolov8_head import YOLOv8Head, YOLOv8SegHead
 from .initializer import initialize_defult
 from .model_factory import build_model_from_cfg
 from .registry import register_model
@@ -41,7 +41,7 @@ class YOLOv8(nn.Cell):
 
         # reset parameter for Detect Head
         m = self.model.model[-1]
-        if isinstance(m, YOLOv8Head):
+        if isinstance(m, (YOLOv8Head, YOLOv8SegHead)):
             m.initialize_biases()
             m.dfl.initialize_conv_weight()
 

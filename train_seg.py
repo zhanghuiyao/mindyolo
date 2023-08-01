@@ -4,14 +4,18 @@ import os
 from functools import partial
 
 import mindspore as ms
+import mindspore.nn
 
-from mindyolo.data import COCODataset, create_loader
+from mindyolo.data import create_loader
+from mindyolo.data.dataset_seg import COCODatasetSeg
+
 from mindyolo.models import create_loss, create_model
 from mindyolo.optim import (EMA, create_group_param, create_lr_scheduler,
                             create_optimizer, create_warmup_momentum_scheduler)
 from mindyolo.utils import logger
 from mindyolo.utils.config import parse_args
-from mindyolo.utils.train_step_factory import get_gradreducer, get_loss_scaler, create_train_step_fn
+from mindyolo.utils.train_step_factory import get_gradreducer, get_loss_scaler
+from mindyolo.utils.train_step_factory import create_train_step_fn_seg
 from mindyolo.utils.trainer_factory import create_trainer
 from mindyolo.utils.callback import create_callback
 from mindyolo.utils.utils import (freeze_layers, load_pretrain, set_default,
@@ -127,7 +131,7 @@ def train(args):
     assert len(stage_epochs) == len(stage_transforms), "The length of transforms and stage_epochs is not equal."
     assert sum(stage_epochs) == args.epochs, f"Stage epochs [{sum(stage_epochs)}] not equal args.epochs [{args.epochs}]"
     for stage in range(len(stage_epochs)):
-        _dataset = COCODataset(
+        _dataset = COCODatasetSeg(
             dataset_path=args.data.train_set,
             img_size=args.img_size,
             transforms_dict=stage_transforms[stage],
@@ -157,7 +161,7 @@ def train(args):
 
     if args.run_eval:
         from test import test
-        eval_dataset = COCODataset(
+        eval_dataset = COCODatasetSeg(
             dataset_path=args.data.val_set,
             img_size=args.img_size,
             transforms_dict=args.data.test_transforms,
@@ -200,7 +204,7 @@ def train(args):
     # Create train_step_fn
     reducer = get_gradreducer(args.is_parallel, optimizer.parameters)
     scaler = get_loss_scaler(args.ms_loss_scaler, scale_value=args.ms_loss_scaler_value)
-    train_step_fn = create_train_step_fn(
+    train_step_fn = create_train_step_fn_seg(
         network=network,
         loss_fn=loss_fn,
         optimizer=optimizer,
