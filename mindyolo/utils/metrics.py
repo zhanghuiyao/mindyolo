@@ -240,29 +240,33 @@ def xyxy2xywh(x):
 
 #------------------------for segment------------------------
 
-def scale_image(masks, im0_shape, pad=None):
+def scale_image(masks, img0_shape, pad=None):
     """
     Takes a mask, and resizes it to the original image size
     Args:
       masks (numpy.ndarray): resized and padded masks/images, [h, w, num]/[h, w, 3].
-      im0_shape (tuple): the original image shape
+      img0_shape (tuple): the original image shape
       ratio_pad (tuple): the ratio of the padding to the original image.
     Returns:
       masks (numpy.ndarray): The masks that are being returned.
     """
 
-    # Rescale coordinates (xyxy) from im1_shape to im0_shape
-    im1_shape = masks.shape
-    if (im1_shape[:2] == im0_shape[:2]).all():
+    # Rescale coordinates (xyxy) from img1_shape to img0_shape
+    img1_shape = masks.shape
+    if (np.array(img1_shape[:2]) == np.array(img0_shape[:2])).all():
         return masks
 
+    if pad is None:
+        ratio = min(img1_shape[0] / img0_shape[0], img1_shape[1] / img0_shape[1])  # ratio  = old / new
+        pad = (img1_shape[0] - img0_shape[0] * ratio) / 2, (img1_shape[1] - img0_shape[1] * ratio) / 2
+
     top, left = int(pad[0]), int(pad[1])  # y, x
-    bottom, right = int(im1_shape[0] - pad[0]), int(im1_shape[1] - pad[1])
+    bottom, right = int(img1_shape[0] - pad[0]), int(img1_shape[1] - pad[1])
 
     if len(masks.shape) < 2:
         raise ValueError(f'"len of masks shape" should be 2 or 3, but got {len(masks.shape)}')
     masks = masks[top:bottom, left:right]
-    masks = cv2.resize(masks, dsize=(im0_shape[1], im0_shape[0]), interpolation=cv2.INTER_LINEAR)
+    masks = cv2.resize(masks, dsize=(img0_shape[1], img0_shape[0]), interpolation=cv2.INTER_LINEAR)
     # masks = ops.interpolate(Tensor(masks, dtype=ms.float32)[None], shape, mode='bilinear', align_corners=False)[0].asnumpy()  # CHW
     if len(masks.shape) == 2:
         masks = masks[:, :, None]

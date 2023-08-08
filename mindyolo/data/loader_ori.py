@@ -15,7 +15,6 @@ def create_loader(
     dataset,
     batch_collate_fn,
     dataset_column_names,
-    dataloader_column_names,
     batch_size,
     epoch_size=1,
     rank=0,
@@ -69,8 +68,7 @@ def create_loader(
             python_multiprocessing=python_multiprocessing,
         )
     ds = ds.batch(
-        batch_size, per_batch_map=batch_collate_fn, input_columns=dataset_column_names, drop_remainder=drop_remainder,
-        output_columns=dataloader_column_names
+        batch_size, per_batch_map=batch_collate_fn, drop_remainder=drop_remainder
     )
     ds = ds.repeat(epoch_size)
 

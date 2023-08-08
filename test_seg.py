@@ -150,14 +150,9 @@ def test(
     nms_times = 0.0
     result_dicts = []
 
-    # imgs = np.load('imgs.npy')
-    # imgs = Tensor(imgs, ms.float32)
-    # out, preds1 = network(imgs)
-
     for i, data in enumerate(loader):
-        imgs, _, paths, ori_shape, pad, hw_scale = (
+        imgs, paths, ori_shape, pad, hw_scale = (
             data["image"],
-            data["labels"],
             data["img_files"],
             data["hw_ori"],
             data["pad"],
@@ -198,14 +193,12 @@ def test(
 
             # Predictions
             pred_masks = process_mask_upsample(proto, pred[:, 6:], pred[:, :4], shape=imgs[si].shape[1:])
-            predn = np.copy(pred)
             pred_masks = pred_masks.astype('float32')
+            pred_masks = scale_image(pred_masks.transpose(1, 2, 0), ori_shape[si], pad=pad[si])
+            predn = np.copy(pred)
             scale_coords(
                 imgs[si].shape[1:], predn[:, :4], ori_shape[si], ratio=hw_scale[si], pad=pad[si]
             )  # native-space pred
-            pred_masks = scale_image((pred_masks.transpose(1, 2, 0)),
-                                         ori_shape[si],
-                                         pad=pad[si])
 
             def single_encode(x):
                 """Encode predicted masks as RLE and append results to jdict."""
@@ -226,7 +219,7 @@ def test(
                         "category_id": coco91class[int(p[5])] if is_coco_dataset else int(p[5]),
                         "bbox": [round(x, 3) for x in b],
                         "score": round(p[4], 5),
-                        'segmentation': rles[j]
+                        "segmentation": rles[j]
                     }
                 )
         logger.info(f"Sample {steps_per_epoch}/{i + 1}, time cost: {(time.time() - _t) * 1000:.2f} ms.")
@@ -331,6 +324,7 @@ def main(args):
         dataset=dataset,
         batch_collate_fn=dataset.test_collate_fn,
         dataset_column_names=dataset.dataset_column_names,
+        dataloader_column_names=dataset.dataloader_column_names,
         batch_size=args.per_batch_size,
         epoch_size=1,
         rank=args.rank,

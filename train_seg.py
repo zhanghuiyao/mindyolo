@@ -7,7 +7,8 @@ import mindspore as ms
 import mindspore.nn
 
 from mindyolo.data import create_loader
-from mindyolo.data.dataset_seg import COCODatasetSeg
+# from mindyolo.data.dataset_seg import COCODatasetSeg
+from mindyolo.data.dataset import COCODataset
 
 from mindyolo.models import create_loss, create_model
 from mindyolo.optim import (EMA, create_group_param, create_lr_scheduler,
@@ -131,7 +132,7 @@ def train(args):
     assert len(stage_epochs) == len(stage_transforms), "The length of transforms and stage_epochs is not equal."
     assert sum(stage_epochs) == args.epochs, f"Stage epochs [{sum(stage_epochs)}] not equal args.epochs [{args.epochs}]"
     for stage in range(len(stage_epochs)):
-        _dataset = COCODatasetSeg(
+        _dataset = COCODataset(
             dataset_path=args.data.train_set,
             img_size=args.img_size,
             transforms_dict=stage_transforms[stage],
@@ -141,11 +142,13 @@ def train(args):
             single_cls=args.single_cls,
             batch_size=args.total_batch_size,
             stride=max(args.network.stride),
+            return_segments=True
         )
         _dataloader = create_loader(
             dataset=_dataset,
             batch_collate_fn=_dataset.train_collate_fn,
             dataset_column_names=_dataset.dataset_column_names,
+            dataloader_column_names=_dataset.dataloader_column_names,
             batch_size=args.per_batch_size,
             epoch_size=stage_epochs[stage],
             rank=args.rank,
@@ -161,7 +164,7 @@ def train(args):
 
     if args.run_eval:
         from test import test
-        eval_dataset = COCODatasetSeg(
+        eval_dataset = COCODataset(
             dataset_path=args.data.val_set,
             img_size=args.img_size,
             transforms_dict=args.data.test_transforms,
@@ -171,11 +174,13 @@ def train(args):
             single_cls=args.single_cls,
             batch_size=args.per_batch_size,
             stride=max(args.network.stride),
+            return_segments=True
         )
         eval_dataloader = create_loader(
             dataset=eval_dataset,
             batch_collate_fn=eval_dataset.test_collate_fn,
             dataset_column_names=eval_dataset.dataset_column_names,
+            dataloader_column_names=eval_dataset.dataloader_column_names,
             batch_size=args.per_batch_size,
             epoch_size=1,
             rank=args.rank,
