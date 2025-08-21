@@ -65,8 +65,8 @@ Experiments are tested on Ascend 910* with mindspore 2.5.0 graph mode.
 
 |  model name  |  scale  | cards  | batch size | resolution |  jit level  | graph compile | ms/step | img/s  |  map  |          recipe              |                                                       weight                                                       |
 |  :--------:  |  :---:  |  :---: |   :---:    |   :---:    |    :---:    |     :---:     |  :---:  |  :---: |:-----:|          :---:               |:------------------------------------------------------------------------------------------------------------------:|
-|    YOLOv8    |    N    |    8   |     16     |  640x640   |     O2      |    145.89s    | 252.79  | 506.35 | 37.3% |    [yaml](./yolov8n.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov8/yolov8-n_500e_mAP372-0e737186-910v2.ckpt) |
-|    YOLOv8    |    S    |    8   |     16     |  640x640   |     O2      |    172.22s    | 251.30  | 509.35 | 44.7% |    [yaml](./yolov8s.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov8/yolov8-s_500e_mAP446-fae4983f-910v2.ckpt) |
+|    YOLOv8    |    N    |    8   |     16     |  640x640   |     O2      |    137.35s    | 108.84  | 1176.04 | 37.3% |    [yaml](./yolov8n.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov8/yolov8-n_500e_mAP372-0e737186-910v2.ckpt) |
+|    YOLOv8    |    S    |    8   |     16     |  640x640   |     O2      |    138.35s    | 140.01  | 895.04 | 44.7% |    [yaml](./yolov8s.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov8/yolov8-s_500e_mAP446-fae4983f-910v2.ckpt) |
 
 
 Experiments are tested on Ascend 910 with mindspore 2.5.0 graph mode.
@@ -85,7 +85,7 @@ Experiments are tested on Ascend 910 with mindspore 2.5.0 graph mode.
 ### Segmentation
 
 
-Experiments are tested on Ascend 910 with mindspore 2.5.0 graph mode.
+Experiments are tested on Ascend 910* with mindspore 2.5.0 graph mode.
 
 *coming soon*
 

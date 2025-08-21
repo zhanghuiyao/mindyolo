@@ -87,12 +87,12 @@ Experiments are tested on Ascend 910* with mindspore 2.5.0 graph mode.
 
 |  model name  |  scale  | cards  | batch size | resolution |  jit level  | graph compile | ms/step | img/s  |  map  |          recipe              |                                                       weight                                                       |
 |  :--------:  |  :---:  |  :---: |   :---:    |   :---:    |    :---:    |     :---:     |  :---:  |  :---: |:-----:|          :---:               |:------------------------------------------------------------------------------------------------------------------:|
-|    YOLOv10    |    N   |    8   |     32     |  640x640   |     O2      |    424.71s    | 513.63  | 498.41 | 38.3% |    [yaml](./yolov10n.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov10/yolov10n_500e_mAP383-c973023d.ckpt) |
-|    YOLOv10    |    S   |    8   |     32     |  640x640   |     O2      |    500.89s    | 503.38  | 511.09 | 45.7% |    [yaml](./yolov10s.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov10/yolov10s_500e_mAP457-8660fa84.ckpt) |
-|    YOLOv10    |    M   |    8   |     32     |  640x640   |     O2      |    590.92s    | 560.81 | 433.22 | 50.7% |    [yaml](./yolov10m.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov10/yolov10m_500e_mAP507-1cc8c5fb.ckpt) |
-|    YOLOv10    |    B   |    8   |     32     |  640x640   |     O2      |    568.23s    | 695.69 | 367.98 | 52.0% |    [yaml](./yolov10b.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov10/yolov10b_500e_mAP520-0b560f87.ckpt) |
-|    YOLOv10    |    L   |    8   |     32     |  640x640   |     O2      |    728.21s    | 782.61 | 327.11 | 52.6% |    [yaml](./yolov10l.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov10/yolov10l_500e_mAP526-226baf5f.ckpt) |
-|    YOLOv10    |    X   |    8   |     20     |  640x640   |     O2      |    767.39s    | 650.63 | 245.92 | 53.7% |    [yaml](./yolov10x.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov10/yolov10x_500e_mAP537-aaaa57bb.ckpt) |
+|    YOLOv10    |    N   |    8   |     32     |  640x640   |     O2      |    301.44s    | 262.36  | 975.76 | 38.3% |    [yaml](./yolov10n.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov10/yolov10n_500e_mAP383-c973023d.ckpt) |
+|    YOLOv10    |    S   |    8   |     32     |  640x640   |     O2      |    388.40s    | 343.66  | 744.92 | 45.7% |    [yaml](./yolov10s.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov10/yolov10s_500e_mAP457-8660fa84.ckpt) |
+|    YOLOv10    |    M   |    8   |     32     |  640x640   |     O2      |    558.43s    | 495.95  | 516.18 | 50.7% |    [yaml](./yolov10m.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov10/yolov10m_500e_mAP507-1cc8c5fb.ckpt) |
+|    YOLOv10    |    B   |    8   |     32     |  640x640   |     O2      |    468.60s    | 598.43  | 427.79 | 52.0% |    [yaml](./yolov10b.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov10/yolov10b_500e_mAP520-0b560f87.ckpt) |
+|    YOLOv10    |    L   |    8   |     32     |  640x640   |     O2      |    607.48s    | 687.72  | 372.24 | 52.6% |    [yaml](./yolov10l.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov10/yolov10l_500e_mAP526-226baf5f.ckpt) |
+|    YOLOv10    |    X   |    8   |     20     |  640x640   |     O2      |    834.19s    | 604.49  | 264.69 | 53.7% |    [yaml](./yolov10x.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov10/yolov10x_500e_mAP537-aaaa57bb.ckpt) |
 
 
 
