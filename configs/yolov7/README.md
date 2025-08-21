@@ -63,7 +63,7 @@ Experiments are tested on Ascend 910* with mindspore 2.5.0 graph mode.
 
 |  model name  |  scale  | cards  | batch size | resolution |  jit level  | graph compile | ms/step | img/s  |  map  |            recipe             |                                                             weight                                                            |
 |  :--------:  |  :---:  |  :---: |   :---:    |   :---:    |    :---:    |     :---:     |  :---:  |  :---: |:-----:|:-----------------------------:|:-----------------------------------------------------------------------------------------------------------------------------:|
-|    YOLOv7    |   Tiny  |    8   |    16      |  640x640   |     O2      |    363.74s    |  352.92 | 362.69 | 37.5% | [yaml](./yolov7-tiny.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov7/yolov7-tiny_300e_mAP375-1d2ddf4b-910v2.ckpt)         |
+|    YOLOv7    |   Tiny  |    8   |    16      |  640x640   |     O2      |    251.94s    |  238.10 | 537.59 | 37.5% | [yaml](./yolov7-tiny.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov7/yolov7-tiny_300e_mAP375-1d2ddf4b-910v2.ckpt)         |
 
 
 Experiments are tested on Ascend 910 with mindspore 2.5.0 graph mode.
