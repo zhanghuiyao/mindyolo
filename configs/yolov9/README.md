@@ -95,11 +95,11 @@ Experiments are tested on Ascend 910* with mindspore 2.5.0 graph mode.
 
 |  model name  |  scale  | cards  | batch size | resolution |  jit level  | graph compile | ms/step | img/s  |  map  |          recipe              |                                                       weight                                                       |
 |  :--------:  |  :---:  |  :---: |   :---:    |   :---:    |    :---:    |     :---:     |  :---:  |  :---: |:-----:|          :---:               |:------------------------------------------------------------------------------------------------------------------:|
-|    YOLOv9    |    T    |    8   |     16     |  640x640   |     O2      |    1316.4s    | 350 | 365.71 | 37.3% |    [yaml](./yolov9-t.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov9/yolov9t_500e_MAP373-c0ee5cbc.ckpt) |
-|    YOLOv9    |    S    |    8   |     16     |  640x640   |     O2      |    1337.1s    | 377 | 339.52 | 46.3% |    [yaml](./yolov9-s.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov9/yolov9s_500e_MAP463-b3cb691d.ckpt) |
-|    YOLOv9    |    M    |    8   |     16     |  640x640   |     O2      |    897.32s    | 499 | 256.51 | 51.4% |    [yaml](./yolov9-m.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov9/yolov9m_500e_MAP514-86aa8761.ckpt) |
-|    YOLOv9    |    C    |    8   |     16     |  640x640   |     O2      |    1017.9s    | 627 | 204.15 | 52.6% |    [yaml](./yolov9-c.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov9/yolov9c_500e_MAP526-ff7bdf68.ckpt) |
-|    YOLOv9    |    E    |    8   |     16     |  640x640   |     O2      |    1927.8s    | 826 | 154.96 | 55.1% |    [yaml](./yolov9-e.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov9/yolov9e_500e_MAP551-6b55c121.ckpt) |
+|    YOLOv9    |    T    |    8   |     16     |  640x640   |     O2      |    1370.67s   | 315.97 | 405.10 | 37.3% |    [yaml](./yolov9-t.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov9/yolov9t_500e_MAP373-c0ee5cbc.ckpt) |
+|    YOLOv9    |    S    |    8   |     16     |  640x640   |     O2      |    1318.16s   | 369.73 | 346.20 | 46.3% |    [yaml](./yolov9-s.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov9/yolov9s_500e_MAP463-b3cb691d.ckpt) |
+|    YOLOv9    |    M    |    8   |     16     |  640x640   |     O2      |    1036.65s   | 501.88 | 255.04 | 51.4% |    [yaml](./yolov9-m.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov9/yolov9m_500e_MAP514-86aa8761.ckpt) |
+|    YOLOv9    |    C    |    8   |     16     |  640x640   |     O2      |    1053.83s   | 631.30 | 202.76 | 52.6% |    [yaml](./yolov9-c.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov9/yolov9c_500e_MAP526-ff7bdf68.ckpt) |
+|    YOLOv9    |    E    |    8   |     16     |  640x640   |     O2      |    2009.92s   | 834.79 | 153.33 | 55.1% |    [yaml](./yolov9-e.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolov9/yolov9e_500e_MAP551-6b55c121.ckpt) |
 
 
 
