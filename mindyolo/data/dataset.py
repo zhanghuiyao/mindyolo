@@ -603,7 +603,7 @@ class COCODataset:
                 ioa = bbox_ioa(box, bboxes)  # intersection over area
                 if (ioa < 0.30).all():  # allow 30% obscuration of existing labels
                     cls = np.concatenate((cls, [c]), 0)
-                    bboxes = np.concatenate((bboxes, [box]), 0)
+                    bboxes = np.concatenate((bboxes, box), 0)
                     if isinstance(segments, list):
                         segments.append(np.concatenate((w - s[:, 0:1], s[:, 1:2]), 1))
                     else:

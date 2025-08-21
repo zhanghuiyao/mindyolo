@@ -60,7 +60,7 @@ Experiments are tested on Ascend 910* with mindspore 2.5.0 graph mode.
 
 |  model name  |  scale  | cards  | batch size | resolution |  jit level  | graph compile | ms/step | img/s  |  map  |          recipe              | weight                                                                                        |
 |  :--------:  |  :---:  |  :---: |   :---:    |   :---:    |    :---:    |     :---:     |  :---:  |  :---: |:-----:|           :---:              |        :---:       |
-|    YOLOX     |    S    |    8   |     8      |   640x640  |     O2      |    299.01s    | 177.65  | 360.26 | 41.0% |    [yaml](./yolox-s.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolox/yolox-s_300e_map407-cebd0183-910v2.ckpt)                   |
+|    YOLOX     |    S    |    8   |     8      |   640x640  |     O2      |    305.18s    | 101.26  | 632.04 | 41.0% |    [yaml](./yolox-s.yaml)    | [weights](https://download-mindspore.osinfra.cn/toolkits/mindyolo/yolox/yolox-s_300e_map407-cebd0183-910v2.ckpt)                   |
 
 
 Experiments are tested on Ascend 910 with mindspore 2.5.0 graph mode.
