@@ -16,27 +16,80 @@
 - python执行py文件中parser的默认参数
 - 命令行传入config参数对应的yaml文件参数
 - 命令行传入config参数对应的yaml文件中__BASE__参数中包含的yaml文件参数，例如yolov3.yaml含有如下参数：
-```yaml
-__BASE__: [
-  '../coco.yaml',
-  './hyp.scratch.yaml',
-]
-```
+
+  ```yaml
+  __BASE__: [
+    '../coco.yaml',
+    './hyp.scratch.yaml',
+  ]
+  ```
 
 ## 基础参数
 
-### 参数说明
-   - device_target: 所用设备，Ascend/CPU
-   - save_dir: 运行结果保存路径，默认为./runs
-   - log_interval: 打印日志step间隔，默认为100
-   - is_parallel: 是否分布式训练，默认为False
-   - ms_mode: 使用静态图模式(0)或动态图模式(1)，默认为0。
-   - config: yaml配置文件路径
-   - per_batch_size: 每张卡batch size，默认为32
-   - epochs: 训练epoch数，默认为300
-   - ...
+### `train.py` 参数说明
 
-### parse参数设置
+- `--config`: yaml配置文件路径
+
+- `--task`: 配置训练任务，检测任务选择`detect` 或 分割任务选择`segment`，默认是检测任务
+- `--device_target`: 选择运行设备，`Ascend`/`CPU`，默认是`Ascend`
+- `--save_dir`: 运行结果保存路径，默认为`./runs`
+- `--log_level`: 日志打印的级别，默认为`INFO`
+- `--is_parallel`: 是否分布式训练，默认为`False`
+- `--ms_mode`: 配置mindspore的运行模式，`静态图模式(0)`或`动态图模式(1)`，默认为`0`。
+- `--max_call_depth`: 配置函数的最大调用深度
+- `--ms_amp_level`: 配置mindspore中的自动混合精度(auto-mix-precision)的级别，默认为`O0`
+- `--keep_loss_fp32`: 是否让loss保持`float32`计算
+- `--anchor_base`: 是否是anchor base类的算法
+- `--ms_loss_scaler`: 选择`loss scaler`的类型，默认`static`，用于对最终loss乘上一个比较大的数以使得混合精度
+- `--ms_loss_scaler_value`: 设置`loss scaler`的默认数值
+- `--ms_jit`: 是否使用`jit`编译
+- `--ms_enable_graph_kernel`: 是否使用图算融合操作
+- `--ms_datasink`: 是否使用数据下沉
+- `--overflow_still_update`: 在出现`overflow`的时候，是否仍然更新权重
+- `--clip_grad`: 是否使用梯度裁剪
+- `--clip_grad_value`: 设置梯度裁剪数值，默认`10.0`，配合`--clip_grad`参数使用
+- `--ema`: Exponential Moving Average，是否使用指数滑动平均操作
+- `--weight`: 初始化权重的路径
+- `--ema_weight`: 初始化`ema`权重的路径
+- `--freeze`: 冻结不进行权重更新的层
+- `--epochs`: 训练epoch数，默认为`300`
+- `--per_batch_size`: 每张卡的批处理大小，默认为32
+- `--img_size`: 训练的图片尺寸大小，默认`640`
+- `--nbs`: nominal batch size, 基准批处理大小，用来作为学习率和梯度累积的缩放基准，如果实际的`total_batch_size`小于`nbs`，就会通过梯度累积 (gradient accumulation) 来模拟更大的有效批大小，从而保持训练的稳定性
+- `--accumulate`: 设置进行梯度累加的step数量，默认为`1`，即不进行梯度累加
+- `--auto_accumulate`: 是否进行自动梯度累加操作
+- `--log_interval`: 打印日志的step间隔，默认为`100`，即每100个step打印一次日志
+- `--single_cls`: 是否使用多类别的数据训练单类别的模型
+- `--sync_bn`: 是否启用同步BatchNorm操作
+- `--keep_checkpoint_max`: 设置最大的保存权重的数量，如果超过这个数量，优先保存新的权重，前面训练的中间权重会被覆盖。
+- `--run_eval`: 是否在训练过程中执行推理操作
+- `--conf_thres`: confidence threshold, 配置置信度阈值，默认为`0.001`，配合`--run_eval`参数使用
+- `--iou_thres`: IOU threshold, 配置NMS非极大值抑制计算过程中的IOU阈值，默认为`0.65`，配合`--run_eval`参数使用
+- `--conf_free`: 是否模型的输出包含confidence的预测
+- `--rect`: 是否启用`Rectangular`数据增强方法
+- `--nms_time_limit`: 设置NMS非极大值抑制计算的时间限制，超过则退出NMS
+- `--recompute`: 是否启用重计算操作，默认为`False`
+- `--recompute_layers`: 配置需要进行重计算的层，默认为`0`，配合`--recompute`参数使用
+- `--seed`: 设置全局随机种子，默认为`2`
+- `--summary`: 是否收集训练过程的loss
+- `--profiler`: 是否开启`profiler`操作
+- `--profiler_step_num`: 配置`profiler`的step数，默认为`1`，配合`--profiler`参数使用
+- `--opencv_threads_num`: 设置opencv的线程数量，默认为`2`
+- `--strict_load`: 是否严格加载初始化权重
+
+*下面的参数是用于在 ModelArts 平台训练的一些额外配置：*
+
+- `--enable_modelarts`: 是否使用ModelArts环境进行训练
+- `--data_url`: 数据集所在的`obs`文件夹路径
+- `--ckpt_url`: 预训练权重所在的`obs`文件夹路径
+- `--multi_data_url`: 多个数据集所在的`obs`文件夹路径列表
+- `--pretrain_url`: 多个预训练权重所在的`obs`文件夹路径列表
+- `--train_url`: 模型输出的`obs`路径
+- `--data_dir`: 本地机器的数据集路径 (modelarts上会把`--data_url`的数据集从`obs`上拷贝到本地机器)
+- `--ckpt_dir`: 本地机器的权重路径 (modelarts上会把`--ckpt_url`的预训练权重从`obs`上拷贝到本地机器)
+
+### 命令行参数传入
+
 该部分参数通常由命令行传入，示例如下：
 
   ```shell
