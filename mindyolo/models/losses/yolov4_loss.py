@@ -62,7 +62,7 @@ class YOLOv4Loss(nn.Cell):
         image_shape = imgs.shape
         gain = get_tensor(image_shape, targets.dtype)[[3, 2]]
         ori_targets = targets.copy()
-        lcls, lbox, lobj = 0.0, 0.0, 0.0
+        lcls, lbox, lobj = get_tensor(0.0), get_tensor(0.0), get_tensor(0.0)
         tcls, tbox, indices, anchors, tmasks = self.build_targets(
             p, targets, imgs
         )  # class, box, (image, anchor, gridj, gridi), anchors, mask

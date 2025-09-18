@@ -71,7 +71,7 @@ class YOLOv5Loss(nn.Cell):
         return res
 
     def construct(self, p, targets, imgs):  # predictions, targets
-        lcls, lbox, lobj = 0.0, 0.0, 0.0
+        lcls, lbox, lobj = get_tensor(0.0), get_tensor(0.0), get_tensor(0.0)
 
         tcls, tbox, indices, anchors, tmasks = self.build_targets(
             p, targets
