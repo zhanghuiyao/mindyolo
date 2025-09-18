@@ -59,6 +59,7 @@ def get_parser_train(parents=None):
                         help="use SyncBatchNorm, only available in DDP mode")
     parser.add_argument("--keep_checkpoint_max", type=int, default=100)
     parser.add_argument("--run_eval", type=ast.literal_eval, default=False, help="Whether to run eval during training")
+    parser.add_argument("--run_eval_interval", type=int, default=1, help="interval epochs of running eval during training")
     parser.add_argument("--conf_thres", type=float, default=0.001, help="object confidence threshold for run_eval")
     parser.add_argument("--iou_thres", type=float, default=0.65, help="IOU threshold for NMS for run_eval")
     parser.add_argument("--conf_free", type=ast.literal_eval, default=False,
@@ -302,6 +303,7 @@ def train(args):
             enable_modelarts=args.enable_modelarts,
             train_url=args.train_url,
             run_eval=args.run_eval,
+            run_eval_interval=args.run_eval_interval,
             test_fn=test_fn,
             rank_size=args.rank_size,
             ms_jit=args.ms_jit,
@@ -324,6 +326,7 @@ def train(args):
             enable_modelarts=args.enable_modelarts,
             train_url=args.train_url,
             run_eval=args.run_eval,
+            run_eval_interval=args.run_eval_interval,
             test_fn=test_fn,
             profiler_step_num=args.profiler_step_num
         )
