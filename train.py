@@ -127,6 +127,22 @@ def train(args):
     stage_dataloaders = []
     stage_epochs = [args.epochs,] if not isinstance(transforms, dict) else transforms['stage_epochs']
     stage_transforms = [transforms,] if not isinstance(transforms, dict) else transforms['trans_list']
+    # auto adapte stage_epoch when not match between stage_epochs and total epochs
+    if sum(stage_epochs) != args.epochs:
+        if len(stage_epochs) == 1:
+            _stage_epochs = [args.epochs,]
+        elif args.epochs == 1:
+            _stage_epochs = [args.epochs,]
+            stage_transforms = stage_transforms[0:1]
+        elif len(stage_epochs) == 2:
+            num_last = min(max(1, stage_epochs[-1]), args.epochs-1)
+            _stage_epochs = [args.epochs-num_last, num_last]
+        else:
+            num_last = min(max(1, stage_epochs[-1]), args.epochs-1)
+            _stage_epochs = [args.epochs-num_last, num_last]
+            stage_transforms = [stage_transforms[0], stage_transforms[-1]]
+        print(f"WARNING: total stage epochs {stage_epochs} not equal total epoch {args.epochs}, auto modified it to {_stage_epochs}, please check it in {os.path.dirname(args.config)}/hyp.scratch.*.yaml")
+        stage_epochs = _stage_epochs
     assert len(stage_epochs) == len(stage_transforms), "The length of transforms and stage_epochs is not equal."
     assert sum(stage_epochs) == args.epochs, f"Stage epochs [{sum(stage_epochs)}] not equal args.epochs [{args.epochs}]"
     for stage in range(len(stage_epochs)):
