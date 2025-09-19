@@ -13,7 +13,6 @@
 - 用户命令行传入参数
 - 命令行传入config参数对应的yaml文件参数
 - 命令行传入config参数对应的yaml文件中__BASE__参数中包含的yaml文件参数，例如yolov3.yaml含有如下参数：
-- `train.py`/`infer.py`文件中parser的默认参数
 
   ```yaml
   __BASE__: [
@@ -21,6 +20,8 @@
     './hyp.scratch.yaml',
   ]
   ```
+
+- `train.py`/`infer.py`文件中parser的默认参数
 
 ## 基础参数
 
