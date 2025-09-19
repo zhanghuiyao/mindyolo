@@ -85,7 +85,7 @@
   - Notice that if you are using `msrun` startup with 2 devices, please add `--bind_core=True` to improve performance. For example:
 
     ```shell
-    msrun --bind_core=True --worker_num=2--local_worker_num=2 --master_port=8118 \
+    msrun --bind_core=True --worker_num=2 --local_worker_num=2 --master_port=8118 \
           --log_dir=msrun_log --join=True --cluster_time_out=300 \
           python train.py --config ./configs/yolov7/yolov7.yaml  --is_parallel True
     ```
