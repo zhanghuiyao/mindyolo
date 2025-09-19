@@ -17,6 +17,8 @@
 
 - *Notes:*
 
+  - The results will be saved in `./detect_results`
+
   - *For more details of the command line arguments, see `demo/predict.py -h` or look at its [source code](https://github.com/mindspore-lab/mindyolo/blob/master/deploy/predict.py) to understand their behavior.*
 
 ### 2. Training & Evaluating
