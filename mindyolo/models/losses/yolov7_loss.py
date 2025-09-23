@@ -65,7 +65,7 @@ class YOLOv7Loss(nn.Cell):
         self.loss_item_name = ["loss", "lbox", "lobj", "lcls"]  # branch name returned by lossitem for print
 
     def construct(self, p, targets, imgs):
-        lcls, lbox, lobj = 0.0, 0.0, 0.0
+        lcls, lbox, lobj = get_tensor(0.0), get_tensor(0.0), get_tensor(0.0)
         bs, as_, gjs, gis, targets, anchors, tmasks = self.build_targets(p, targets, imgs)  # bs: (nl, bs*5*na*gt_max)
         bs, as_, gjs, gis, targets, anchors, tmasks = (
             ops.stop_gradient(bs),
@@ -418,7 +418,7 @@ class YOLOv7AuxLoss(nn.Cell):
         self.loss_item_name = ["loss", "lbox", "lobj", "lcls"]  # branch name returned by loss for print
 
     def construct(self, p, targets, imgs):
-        lcls, lbox, lobj = 0.0, 0.0, 0.0
+        lcls, lbox, lobj = get_tensor(0.0), get_tensor(0.0), get_tensor(0.0)
         targets_ori = targets
         bs, as_, gjs, gis, targets, anchors, tmasks = self.build_targets(
             p[: self.nl], targets_ori, imgs

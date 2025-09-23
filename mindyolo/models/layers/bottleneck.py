@@ -1,6 +1,5 @@
 from mindspore import nn, ops
 
-from .activation import SiLU
 from .conv import ConvNormAct, DWConvNormAct, RepConv
 
 
@@ -62,6 +61,36 @@ class C3(nn.Cell):
         return c5
 
 
+class C2(nn.Cell):
+    """CSP Bottleneck with 2 convolutions."""
+
+    def __init__(self, c1: int, c2: int, n: int = 1, shortcut: bool = True, g: int = 1, e: float = 0.5):
+        """
+        Initialize a CSP Bottleneck with 2 convolutions.
+
+        Args:
+            c1 (int): Input channels.
+            c2 (int): Output channels.
+            n (int): Number of Bottleneck blocks.
+            shortcut (bool): Whether to use shortcut connections.
+            g (int): Groups for convolutions.
+            e (float): Expansion ratio.
+        """
+        super().__init__()
+        self.c = int(c2 * e)  # hidden channels
+        self.cv1 = ConvNormAct(c1, 2 * self.c, 1, 1)
+        self.cv2 = ConvNormAct(2 * self.c, c2, 1)  # optional act=FReLU(c2)
+        # self.attention = ChannelAttention(2 * self.c)  # or SpatialAttention()
+        self.m = nn.SequentialCell(*(Bottleneck(self.c, self.c, shortcut, k=((3, 3), (3, 3)), g=(1, g), e=1.0) for _ in range(n)))
+
+    def construct(self, x):
+        """Forward pass through the CSP bottleneck with 2 convolutions."""
+        x = self.cv1(x)
+        _c = x.shape[1] // 2
+        a, b = ops.split(x, axis=1, split_size_or_sections=_c)
+        return self.cv2(ops.cat((self.m(a), b), 1))
+
+        
 class C2f(nn.Cell):
     # CSP Bottleneck with 2 convolutions
     def __init__(
@@ -255,7 +284,7 @@ class RepVGGDW(nn.Cell):
         self.conv = ConvNormAct(ed, ed, k=7, s=1, p=3, g=ed, act=False)
         self.conv1 = ConvNormAct(ed, ed, k=3, s=1, p=1, g=ed, act=False)
         self.dim = ed
-        self.act = SiLU()
+        self.act = nn.SiLU()
     
     def construct(self, x):
         return self.act(self.conv(x) + self.conv1(x))

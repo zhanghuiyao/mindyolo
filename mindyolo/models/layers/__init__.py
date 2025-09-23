@@ -21,6 +21,7 @@ __all__ = [
     "Focus",
     "Bottleneck",
     "C3",
+    "C2",
     "C2f",
     "DWConvNormAct",
     "DWBottleneck",
