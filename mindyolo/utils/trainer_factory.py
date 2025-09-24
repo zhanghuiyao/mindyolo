@@ -96,6 +96,7 @@ class Trainer:
         enable_modelarts: bool = False,
         train_url: str = "",
         run_eval: bool = False,
+        run_eval_interval: int = 1,
         test_fn: types.FunctionType = None,
         ms_jit: bool = True,
         rank_size: int = 8,
@@ -117,7 +118,7 @@ class Trainer:
         # to be compatible with old interface
         has_eval_mask = list(isinstance(c, EvalWhileTrain) for c in self.callback)
         if run_eval and not any(has_eval_mask):
-            self.callback.append(EvalWhileTrain())
+            self.callback.append(EvalWhileTrain(stage_intervals=run_eval_interval))
         if not run_eval and any(has_eval_mask):
             ind = has_eval_mask.index(True)
             self.callback.pop(ind)
@@ -224,6 +225,7 @@ class Trainer:
         enable_modelarts: bool = False,
         train_url: str = "",
         run_eval: bool = False,
+        run_eval_interval: int = 1,
         test_fn: types.FunctionType = None,
         overflow_still_update: bool = False,
         ms_jit: bool = True,
@@ -241,7 +243,7 @@ class Trainer:
         # to be compatible with old interface
         has_eval_mask = list(isinstance(c, EvalWhileTrain) for c in self.callback)
         if run_eval and not any(has_eval_mask):
-            self.callback.append(EvalWhileTrain())
+            self.callback.append(EvalWhileTrain(stage_intervals=run_eval_interval))
         if not run_eval and any(has_eval_mask):
             ind = has_eval_mask.index(True)
             self.callback.pop(ind)
